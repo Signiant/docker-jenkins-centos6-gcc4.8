@@ -14,8 +14,15 @@ RUN chmod +r /tmp/yum.packages.list
 RUN yum install -y `cat /tmp/yum.packages.list`
 
 # Install c/c++ development tools
+RUN wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
+RUN yum -y install devtoolset-2-gcc devtoolset-2-binutils
+RUN yum -y install devtoolset-2-gcc-c++ devtoolset-2-gcc-gfortran
+#RUN scl enable devtoolset-2 bash
+#RUN source /opt/rh/devtoolset-2/enable
+
+#install python2.7
 RUN yum install -y centos-release-scl
-RUN yum install -y devtoolset-3-gcc-c++ devtoolset-3-libstdc++-devel devtoolset-3-gdb python27
+RUN yum install -y python27
 RUN source scl_source enable python27 && pip install --upgrade pip
 
 # Install cmake3.12
@@ -26,8 +33,8 @@ RUN cd /usr/local/bin && \
 tar -xzf /tmp/cmake-3.12.0-Linux-x86_64.tar.gz
 RUN ln -s /usr/local/bin/cmake-3.12.0-Linux-x86_64/bin/cmake /usr/bin/cmake
 
-RUN printf "\nsource scl_source enable devtoolset-3 python27\n" >> /root/.bashrc
-RUN printf "\nsource scl_source enable devtoolset-3 python27\n" >> /home/$BUILD_USER/.bashrc
+RUN printf "\nsource scl_source enable devtoolset-2 python27\n" >> /root/.bashrc
+RUN printf "\nsource scl_source enable devtoolset-2 python27\n" >> /home/$BUILD_USER/.bashrc
 
 # Install umpire
 ENV UMPIRE_VERSION 0.5.4
