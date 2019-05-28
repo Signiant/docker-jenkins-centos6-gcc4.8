@@ -37,7 +37,7 @@ RUN printf "\nsource scl_source enable devtoolset-2 python27\n" >> /root/.bashrc
 RUN printf "\nsource scl_source enable devtoolset-2 python27\n" >> /home/$BUILD_USER/.bashrc
 
 # Install umpire
-ENV UMPIRE_VERSION 0.5.4
+ENV UMPIRE_VERSION 0.5.5
 RUN source scl_source enable python27 && pip install umpire==${UMPIRE_VERSION}
 
 # Make sure anything/everything we put in the build user's home dir is owned correctly
